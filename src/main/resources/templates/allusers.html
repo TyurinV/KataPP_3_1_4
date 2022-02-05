@@ -25,292 +25,324 @@
     <div class="row">
         <div class="col-2">
             <div class="d-grid gap-2">
-                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a href="/user/" class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                       data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                       aria-selected="true">User</a>
-                    <a href="/admin/" class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                       data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
-                       aria-selected="false">Admin</a>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                       aria-controls="v-pills-home" aria-selected="true">Admin</a>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                       aria-controls="v-pills-profile" aria-selected="false">User</a>
                 </div>
             </div>
         </div>
 
         <div class="col-10">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">All Users</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                       aria-controls="profile" aria-selected="false">New Users</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                               aria-controls="home" aria-selected="true">All Users</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                               aria-controls="profile" aria-selected="false">New Users</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
 
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                    <h2>All users </h2>
-                    контент все юзеры
+                            <h2>All users </h2>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Пол</th>
+                                    <th>Курящий</th>
+                                    <!--                            <th>Действия</th>-->
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${userList}">
+                                    <td th:utext="${user.getId()}"></td>
+                                    <td th:utext="${user.getFirstName()}"></td>
+                                    <td th:utext="${user.getLastName()}"></td>
+                                    <td th:utext="${user.getSex()}"></td>
+                                    <td th:utext="${user.isSmoker()}"></td>
+                                    <td>
+                                        <!--                                Кнопка модалки ЕДИТ-->
+                                        <a th:href="@{/admin/getUserById/(id=${user.id})}" class="btn btn-primary btne">
+                                            Edit </a></td>
+                                    <!--                                Кнопка delete-->
+                                    <td><a th:href="@{/admin/getUserById/(id=${user.id})}" class="btn btn-danger btnd"
+                                           id="deleteButton">Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <!--                Это модалка EDit-->
+                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+                             aria-hidden="true">
+
+                            <form th:action="@{/admin/edit}" method="PUT">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                            <div class="form-group">
+                                                <label for="id">ID</label>
+                                                <input type="text" class="form-control" id="idEdit" placeholder="ID"
+                                                       name="id" readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="firstName">Name</label>
+                                                <input type="text" class="form-control" id="firstNameEdit"
+                                                       placeholder="имя"
+                                                       name="firstName">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="lastName">Last name</label>
+                                                <input type="text" class="form-control" id="lastNameEdit"
+                                                       placeholder="фамилия"
+                                                       name="lastName">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="passwordEdit"
+                                                       placeholder="password"
+                                                       name="password">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="sex">Пол</label>
+                                                <select class="form-control" id="sexEdit" name="sex" multiple size="2">
+                                                    <option value="М">Муж</option>
+                                                    <option value="Ж">Жен</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="smokerEdit"
+                                                           name="smoker">
+                                                    <label class="form-check-label" for="smokerEdit">
+                                                        Курит
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input th:value="ROLE_ADMIN" class="form-check-input"
+                                                           type="checkbox"
+                                                           id="adminEdit" name="roleAdmin">
+                                                    <label class="form-check-label" for="adminEdit">
+                                                        админ
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--                Конец модалки Edit-->
+
+                        <!--                Это модалка DELETE-->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                             aria-labelledby="ModalLabel"
+                             aria-hidden="true">
+                            <form th:action="@{/admin/delete/}" method="PUT">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                            <div class="form-group">
+                                                <label for="idDelete">ID</label>
+                                                <input type="text" class="form-control" id="idDelete" placeholder="ID"
+                                                       name="id" readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="firstNameDelete">Name</label>
+                                                <input type="text" class="form-control" id="firstNameDelete"
+                                                       placeholder="имя"
+                                                       name="firstName" readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="lastNameDelete">Last name</label>
+                                                <input type="text" class="form-control" id="lastNameDelete"
+                                                       placeholder="фамилия"
+                                                       name="lastName" readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="sexDelete">Пол</label>
+                                                <select class="form-control" id="sexDelete" name="sex" multiple size="2"
+                                                        readonly>
+                                                    <option value="М">Муж</option>
+                                                    <option value="Ж">Жен</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="smokerDelete"
+                                                           name="smoker" onclick="return false" disabled="true">
+                                                    <label class="form-check-label" for="smokerDelete">
+                                                        Курит
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input th:value="ROLE_ADMIN" class="form-check-input"
+                                                           type="checkbox"
+                                                           id="adminDelete" name="roleAdmin" onclick="return false"
+                                                           disabled="true">
+                                                    <label class="form-check-label" for="adminDelete">
+                                                        админ
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--                Это Конецмодалка DELETE-->
+
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <form th:action="@{/admin/add}" method="post">
+
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="id" placeholder="ID" name="id">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="firstName">Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="имя"
+                                           name="firstName">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="фамилия"
+                                           name="lastName">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Пароль"
+                                           name="password">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="sex">Пол</label>
+                                    <select class="form-control" id="sex" name="sex" multiple size="2">
+                                        <option value="М">Муж</option>
+                                        <option value="Ж">Жен</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="smokerDel" name="smoker">
+                                        <label class="form-check-label" for="smoker">
+                                            Курит
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input th:value="ROLE_ADMIN" class="form-check-input" type="checkbox"
+                                               id="adminDel"
+                                               name="roleAdmin">
+                                        <label class="form-check-label" for="admin">
+                                            админ
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success nBtn">Save</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>id</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Пол</th>
-                            <th>Курящий</th>
-                            <!--                            <th>Действия</th>-->
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Id</th>
+                            <th>UserName</th>
+                            <th>Last Name</th>
+                            <th>Password</th>
+                            <th>Sex</th>
+                            <th>Smoker</th>
+
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="user : ${userList}">
-                            <td th:utext="${user.getId()}"></td>
-                            <td th:utext="${user.getFirstName()}"></td>
-                            <td th:utext="${user.getLastName()}"></td>
-                            <td th:utext="${user.getSex()}"></td>
-                            <td th:utext="${user.isSmoker()}"></td>
-                            <!--                            <td>-->
-                            <!--                                <a th:href="@{'/admin/edit/' + ${user.id}}">edit</a>-->
-                            <!--                                <a th:href="@{'/admin/delete/' + ${user.id}}">delete</a>-->
-                            <!--                            </td>-->
-                            <td>
-                                <!--                                Кнопка модалки ЕДИТ-->
-                                <a th:href="@{/admin/getOne/(id=${user.id})}" class="btn btn-primary btne"> модальное
-                                    Edit </a></td>
-                            <!--                                <a th:href="@{/admin/getOne/(Id=${user.id})}" class="btn btn-primary">Открыть модальное окно Edit  </a>-->
-                            <!--                                Кнопка delete-->
-                            <td><a th:href="@{/admin/getOne/(id=${user.id})}" class="btn btn-danger btnd"
-                                   id="deleteButton">модальное Delete</a>
-                            </td>
-                        </tr>
+                                                <tr>
+                                                    <td th:text="${username.getId()}">Id</td>
+                                                    <td th:text="${username.getUsername()}">Login</td>
+                                                    <td th:text="${username.getLastName()}">Last Name</td>
+                                                    <td th:text="${username.getPassword()}">Password</td>
+                                                    <td th:text="${username.getSex()}">Sex</td>
+                                                    <td th:text="${username.isSmoker()}">Smoke</td>
+                                                </tr>
                         </tbody>
                     </table>
                 </div>
-
-
-                <!--                Это модалка EDit-->
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-                     aria-hidden="true">
-
-                    <form th:action="@{/admin/edit}" method="PUT">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-
-
-                                    <div class="form-group">
-                                        <label for="id">ID</label>
-                                        <input type="text" class="form-control" id="idEdit" placeholder="ID"
-                                               name="id" readonly>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="firstName">Name</label>
-                                        <input type="text" class="form-control" id="firstNameEdit" placeholder="имя"
-                                               name="firstName">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="lastName">Last name</label>
-                                        <input type="text" class="form-control" id="lastNameEdit" placeholder="фамилия"
-                                               name="lastName">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="text" class="form-control" id="passwordEdit" placeholder="password"
-                                               name="password">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="sex">Пол</label>
-                                        <select class="form-control" id="sexEdit" name="sex" multiple size="2">
-                                            <option value="М">Муж</option>
-                                            <option value="Ж">Жен</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="smokerEdit"
-                                                   name="smoker">
-                                            <label class="form-check-label" for="smokerEdit">
-                                                Курит
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input th:value="ROLE_ADMIN" class="form-check-input" type="checkbox"
-                                                   id="adminEdit" name="roleAdmin">
-                                            <label class="form-check-label" for="adminEdit">
-                                                админ
-                                            </label>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary2">Edit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!--                Конец модалки Edit-->
-
-                <!--                Это модалка DELETE-->
-                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-                     aria-hidden="true">
-                    <form th:action="@{/admin/delete/}" method="PUT">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-
-
-                                    <div class="form-group">
-                                        <label for="idDelete">ID</label>
-                                        <input type="text" class="form-control" id="idDelete" placeholder="ID"
-                                               name="id" readonly>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="firstNameDelete">Name</label>
-                                        <input type="text" class="form-control" id="firstNameDelete" placeholder="имя"
-                                               name="firstName">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="lastNameDelete">Last name</label>
-                                        <input type="text" class="form-control" id="lastNameDelete"
-                                               placeholder="фамилия"
-                                               name="lastName">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="sexDelete">Пол</label>
-                                        <select class="form-control" id="sexDelete" name="sex" multiple size="2">
-                                            <option value="М">Муж</option>
-                                            <option value="Ж">Жен</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="smokerDelete"
-                                                   name="smoker">
-                                            <label class="form-check-label" for="smokerDelete">
-                                                Курит
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input th:value="ROLE_ADMIN" class="form-check-input" type="checkbox"
-                                                   id="adminDelete" name="roleAdmin">
-                                            <label class="form-check-label" for="adminDelete">
-                                                админ
-                                            </label>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary3">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!--                Это Конецмодалка DELETE-->
-
-
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    контент новый юзер
-                    <form th:action="@{/admin/add}" method="post">
-
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="id" placeholder="ID" name="id">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="firstName">name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="имя" name="firstName">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastName">2name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="фамилия" name="lastName">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Пароль</label>
-                            <input type="text" class="form-control" id="password" placeholder="Пароль" name="password">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="sex">Пол</label>
-                            <select class="form-control" id="sex" name="sex" multiple size="2">
-                                <option value="М">Муж</option>
-                                <option value="Ж">Жен</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="smokerDel" name="smoker">
-                                <label class="form-check-label" for="smoker">
-                                    Курит
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input th:value="ROLE_ADMIN" class="form-check-input" type="checkbox" id="adminDel"
-                                       name="roleAdmin">
-                                <label class="form-check-label" for="admin">
-                                    админ
-                                </label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-success nBtn">Save</button>
-                    </form>
-
-                </div>
             </div>
-
         </div>
 
     </div>
-    <a th:href="${'/admin/add'}">Add new</a>
-    <form th:action="@{/logout}">
-        <button type="submit">logout</button>
     </form>
 </div>
 </div>

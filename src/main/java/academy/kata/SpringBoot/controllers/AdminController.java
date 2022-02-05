@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -24,8 +23,7 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-    @Autowired
-    UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     private PasswordEncoder passwordEncoder;
 
@@ -35,9 +33,10 @@ public class AdminController {
     }
 
     @Autowired
-    public AdminController(RoleService roleService, UserService userService) {
+    public AdminController(RoleService roleService, UserService userService, UserDetailsService userDetailsService) {
         this.roleService = roleService;
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping(value = "/")
@@ -48,19 +47,6 @@ public class AdminController {
         return "allusers";
     }
 
-    @GetMapping(value = "/edit/{id}")
-    public String editPage(@PathVariable Long id, Model model) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "edit";
-    }
-
-
-    @GetMapping("/add")
-    public String addPage(Model model) {
-        model.addAttribute("user", new User());
-        return "/add";
-    }
 
     @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin) {
@@ -77,15 +63,9 @@ public class AdminController {
     }
 
 
-//    @GetMapping(value = "/delete/{id}")
-//    public String deleteUser(@PathVariable Long id) {
-//        userService.remove(id);
-//        return "redirect:/admin/";
-//    }
-
-    @RequestMapping("/getOne")
+    @RequestMapping("/getUserById")
     @ResponseBody
-    public User getOne(Long id) {
+    public User getUserById(Long id) {
         return userService.getUserById(id);
     }
 
@@ -94,19 +74,18 @@ public class AdminController {
         userService.remove(id);
         return "redirect:/admin/";
     }
-    //    @PostMapping(value = "/edit")
 
     @RequestMapping(value = "/edit", method = {RequestMethod.PUT, RequestMethod.GET})
-//    public String editUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
     public String editUser(User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("ROLE_USER"));
         if (roleAdmin != null) {
             roles.add(roleService.getRoleByName("ROLE_ADMIN"));
         }
         user.setRoles(roles);
+        user.setPassword(hashedPassword);
         userService.edit(user);
         return "redirect:/admin/";
     }
-
 }

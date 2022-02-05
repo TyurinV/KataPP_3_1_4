@@ -7,7 +7,7 @@ $('document').ready(function () {
         $.get(href, function (user, status) {
             $('#idEdit').val(user.id);
             $('#firstNameEdit').val(user.firstName);
-            $('#passwordEdit').val(user.password);
+            // $('#passwordEdit').val(user.password);
             $('#lastNameEdit').val(user.lastName);
             $('#sexEdit').val(user.sex);
 

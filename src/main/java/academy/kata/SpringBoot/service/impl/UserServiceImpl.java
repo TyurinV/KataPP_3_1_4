@@ -2,7 +2,6 @@ package academy.kata.SpringBoot.service.impl;
 
 import academy.kata.SpringBoot.dao.UserDAO;
 import academy.kata.SpringBoot.model.User;
-import academy.kata.SpringBoot.repositories.UserRepository;
 import academy.kata.SpringBoot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

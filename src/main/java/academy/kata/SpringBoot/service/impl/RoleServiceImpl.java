@@ -2,7 +2,6 @@ package academy.kata.SpringBoot.service.impl;
 
 import academy.kata.SpringBoot.dao.RoleDAO;
 import academy.kata.SpringBoot.model.Role;
-import academy.kata.SpringBoot.repositories.RoleRepository;
 import academy.kata.SpringBoot.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
