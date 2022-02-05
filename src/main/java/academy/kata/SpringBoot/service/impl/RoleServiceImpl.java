@@ -1,5 +1,6 @@
 package academy.kata.SpringBoot.service.impl;
 
+import academy.kata.SpringBoot.dao.RoleDAO;
 import academy.kata.SpringBoot.model.Role;
 import academy.kata.SpringBoot.repositories.RoleRepository;
 import academy.kata.SpringBoot.service.RoleService;
@@ -13,36 +14,37 @@ import java.util.List;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-//    private final RoleDAO roleDAO;
-//
-//    @Autowired
-//    public RoleServiceImpl(RoleDAO roleDAO) {
-//        this.roleDAO = roleDAO;
-//    }
-
-    private final RoleRepository roleRepository;
+    private final RoleDAO roleDAO;
 
     @Autowired
-
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public RoleServiceImpl(RoleDAO roleDAO) {
+        this.roleDAO = roleDAO;
     }
+
+
 
     @Override
     public Role getRoleByName(String name) {
-        return this.roleRepository.getRoleByName(name);
+//        return this.roleRepository.getRoleByName(name);
+        return this.roleDAO.getRoleByName(name);
     }
 
     @Override
     public void addRole(Role role) {
-        roleRepository.save(role);
-    }
+        roleDAO.addRole(role);}
+//    }   public void addRole(Role role) {
+//        roleRepository.save(role);
+//    }
 
 
     @Override
     public List <Role> getAllRoles() {
-        return this.roleRepository.findAll();
+        return this.roleDAO.allRoles();
+//        return this.roleRepository.findAll();
     }
 
-
+    @Override
+    public Role getRoleById(Long id) {
+        return this.roleDAO.getRoleById(id);
+    }
 }

@@ -51,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     } //в сервисе
-
 //    @Bean
 //    public DaoAuthenticationProvider daoAuthenticationProvider(){
 //        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

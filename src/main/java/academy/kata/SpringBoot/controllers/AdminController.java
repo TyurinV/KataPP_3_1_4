@@ -66,9 +66,9 @@ public class AdminController {
     public String addUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin) {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
+        roles.add(roleService.getRoleByName("ROLE_USER"));
         if (roleAdmin != null) {
-            roles.add(roleService.getRoleByName("ROLE_USER"));
+            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
         }
         user.setRoles(roles);
         user.setPassword(hashedPassword);
@@ -89,7 +89,7 @@ public class AdminController {
         return userService.getUserById(id);
     }
 
-    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    @RequestMapping(value = "/delete/", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(Long id) {
         userService.remove(id);
         return "redirect:/admin/";
@@ -100,21 +100,12 @@ public class AdminController {
 //    public String editUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
     public String editUser(User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByName("ROLE_ADMIN"));
+        roles.add(roleService.getRoleByName("ROLE_USER"));
         if (roleAdmin != null) {
-            roles.add(roleService.getRoleByName("ROLE_USER"));
+            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
         }
         user.setRoles(roles);
         userService.edit(user);
-
-//        Set<Role> roles = new HashSet<>();
-//        // едит юзеров и масссив
-//        roles.add(roleService.getRoleById(2l));
-//        if (roleAdmin != null) {
-//            roles.add(roleService.getRoleById(1l));
-//        }
-//        user.setRoles(roles);
-//        userService.edit(user);
         return "redirect:/admin/";
     }
 
