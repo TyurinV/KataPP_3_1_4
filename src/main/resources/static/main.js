@@ -28,7 +28,8 @@ $('document').ready(function () {
             $('#lastNameDelete').val(user.lastName);
             $('#sexDelete').val(user.sex);
             $('#smokerDelete').prop("checked", user.smoker);
-            $('#adminDelete').prop("checked", ((user.roles).length > 1));
+            // $('#adminDelete').prop("checked", ((user.roles).length > 1)); по числу, а нже по роле
+            $('#adminDelete').prop("checked", ((user.roles).filter(e => e.roleName === 'ROLE_ADMIN')));
         });
 
         $('#deleteModal').modal();
