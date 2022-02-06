@@ -1,6 +1,8 @@
 package academy.kata.SpringBoot.dao;
 
 import academy.kata.SpringBoot.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +13,10 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    @PersistenceContext                 //(type = PersistenceContextType.EXTENDED)
+    @PersistenceContext
     private EntityManager em;
 
-
     @Override
-
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return em.createQuery("SELECT distinct u FROM User u JOIN FETCH u.roles ORDER BY u.id", User.class).getResultList();
@@ -37,6 +37,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void edit(User user) {
+
         em.merge(user);
     }
 
