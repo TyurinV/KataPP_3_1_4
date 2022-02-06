@@ -28,8 +28,8 @@ $('document').ready(function () {
             $('#lastNameDelete').val(user.lastName);
             $('#sexDelete').val(user.sex);
             $('#smokerDelete').prop("checked", user.smoker);
-            $('#adminDelete').prop("checked", ((user.roles).length > 1));
-            // $('#adminDelete').prop("checked", ((user.roles).filter(e => e.roleName === 'ROLE_ADMIN')));
+            // $('#adminDelete').prop("checked", ((user.roles).length > 1));
+            $('#adminDelete').prop("checked", ((user.roles).filter(function(e) { return e.roleName === 'ROLE_ADMIN'; }).length > 0));
         });
 
         $('#deleteModal').modal();
