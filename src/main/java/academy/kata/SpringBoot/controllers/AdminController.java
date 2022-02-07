@@ -69,13 +69,13 @@ public class AdminController {
         return userService.getUserById(id);
     }
 
-    @RequestMapping(value = "/delete/")
+    @PostMapping(value = "/delete/")
     public String delete(Long id) {
         userService.remove(id);
         return "redirect:/admin/";
     }
 
-    @RequestMapping(value = "/edit")
+    @PostMapping(value = "/edit")
     public String editUser(User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
 //        String hashedPassword = passwordEncoder.encode(user.getPassword());
         Set<Role> roles = new HashSet<>();
