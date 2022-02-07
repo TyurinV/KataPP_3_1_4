@@ -1,4 +1,4 @@
-package academy.kata.SpringBoot.service.impl;
+package academy.kata.SpringBoot.service;
 
 import academy.kata.SpringBoot.dao.UserDAO;
 import academy.kata.SpringBoot.model.User;
