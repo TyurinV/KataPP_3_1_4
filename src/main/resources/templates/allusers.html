@@ -91,7 +91,7 @@
                         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
                              aria-hidden="true">
 
-                            <form th:action="@{/admin/edit}" method="get">
+                            <form th:action="@{/admin/edit}" method="post">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -177,7 +177,7 @@
                         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                              aria-labelledby="ModalLabel"
                              aria-hidden="true">
-                            <form th:action="@{/admin/delete/}" method="PUT">
+                            <form th:action="@{/admin/delete/}" method="post">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">

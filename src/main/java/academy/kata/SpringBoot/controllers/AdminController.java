@@ -25,12 +25,12 @@ public class AdminController {
     private final RoleService roleService;
     private final UserDetailsService userDetailsService;
 
-    private PasswordEncoder passwordEncoder;
+//    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+//    @Autowired
+//    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Autowired
     public AdminController(RoleService roleService, UserService userService, UserDetailsService userDetailsService) {
@@ -50,14 +50,14 @@ public class AdminController {
 
     @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(required = false) String roleAdmin) {
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
+//        String hashedPassword = passwordEncoder.encode(user.getPassword());
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("ROLE_USER"));
         if (roleAdmin != null) {
             roles.add(roleService.getRoleByName("ROLE_ADMIN"));
         }
         user.setRoles(roles);
-        user.setPassword(hashedPassword);
+//        user.setPassword(hashedPassword);
         userService.add(user);
         return "redirect:/admin/";
     }
@@ -69,22 +69,22 @@ public class AdminController {
         return userService.getUserById(id);
     }
 
-    @RequestMapping(value = "/delete/", method = {RequestMethod.DELETE, RequestMethod.GET})
+    @RequestMapping(value = "/delete/")
     public String delete(Long id) {
         userService.remove(id);
         return "redirect:/admin/";
     }
 
-    @RequestMapping(value = "/edit", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/edit")
     public String editUser(User user, @RequestParam(required = false) String roleAdmin) { // массив айдишников
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
+//        String hashedPassword = passwordEncoder.encode(user.getPassword());
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("ROLE_USER"));
         if (roleAdmin != null) {
             roles.add(roleService.getRoleByName("ROLE_ADMIN"));
         }
         user.setRoles(roles);
-        user.setPassword(hashedPassword);
+//        user.setPassword(hashedPassword);
         userService.edit(user);
         return "redirect:/admin/";
     }

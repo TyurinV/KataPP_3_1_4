@@ -16,6 +16,7 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager em;
 
+
     @Override
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
