@@ -9,14 +9,16 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>All Users</title>
+    <title>User info</title>
 </head>
 <body>
 <div class="row align-items-start justify-content-start">
     <div class="col-12">
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-            <h5 class="my-0 mr-md-auto font-weight-normal"
-                th:text="${user.getUsername()} + ' с ролями ' + ${user.getAuthorities()}"></h5>
+            <h5 class="my-0 mr-md-auto font-weight-normal" id="headTOP"
+            ></h5>
+<!--            <h5 class="my-0 mr-md-auto font-weight-normal" th:text="${user.getUsername()} + ' с ролями ' + ${user.getAuthorities()}">-->
+<!--            </h5>-->
             <a class="btn btn-outline-primary" href="/logout">logout</a>
         </div>
     </div>
@@ -45,29 +47,30 @@
                     <th>Id</th>
                     <th>UserName</th>
                     <th>Last Name</th>
-                    <th>Password</th>
                     <th>Sex</th>
                     <th>Smoker</th>
+                    <th>Roles</th>
 
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${user.getId()}">Id</td>
-                    <td th:text="${user.getUsername()}">Login</td>
-                    <td th:text="${user.getLastName()}">Last Name</td>
-                    <td th:text="${user.getPassword()}">Password</td>
-                    <td th:text="${user.getSex()}">Sex</td>
-                    <td th:text="${user.isSmoker()}">Smoke</td>
-                </tr>
+                <tbody id = 'currentUser'>
+<!--                <tr>-->
+<!--                    <td th:text="${user.getId()}">Id</td>-->
+<!--                    <td th:text="${user.getUsername()}">Login</td>-->
+<!--                    <td th:text="${user.getLastName()}">Last Name</td>-->
+<!--                    <td th:text="${user.getPassword()}">Password</td>-->
+<!--                    <td th:text="${user.getSex()}">Sex</td>-->
+<!--                    <td th:text="${user.isSmoker()}">Smoke</td>-->
+<!--                </tr>-->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/main.js" th:src="@{/forUser.js}"></script>
 </body>
 </html>

@@ -16,6 +16,12 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager em;
 
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -26,6 +32,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void add(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         em.persist(user);
     }
 
@@ -38,13 +45,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void edit(User user) {
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         em.merge(user);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User getById(Long id) {
+    public User getUserById(Long id) {
         return em.find(User.class, id);
     }
 

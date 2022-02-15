@@ -12,6 +12,6 @@ public interface UserDAO {
     void add(User user);
     void remove(Long id);
     void edit(User user);
-    User getById(Long id);
+    User getUserById(Long id);
     User getUserByName(String userName);
 }

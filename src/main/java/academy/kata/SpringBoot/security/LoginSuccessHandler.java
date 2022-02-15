@@ -21,28 +21,3 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         httpServletResponse.sendRedirect("/user/");
     }
 }
-
-
-//@Component
-//public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-//
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-//                                        HttpServletResponse httpServletResponse,
-//                                        Authentication authentication) throws IOException {
-//        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-//
-//        boolean admin = false;
-//        for (GrantedAuthority auth : authentication.getAuthorities()) {
-//            System.out.println("Authorities: " + auth);
-//            if ("ROLE_ADMIN".equals(auth.getAuthority())){
-//                admin = true;
-//            }
-//        }
-//        if(admin){
-//            httpServletResponse.sendRedirect("/admin/");
-//        }else{
-//            httpServletResponse.sendRedirect("/user/");
-//        }
-//    }
-//}

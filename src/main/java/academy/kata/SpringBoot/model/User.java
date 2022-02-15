@@ -15,7 +15,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id; //Интеджер нужно и нужен long
+    private Long id;
 
     @Column(name = "firstName", unique = true)
     private String firstName;
@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private boolean smoker;
 
 //    @Fetch(FetchMode.JOIN)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "user_role",
             joinColumns = { @JoinColumn(name = "user_id") },
