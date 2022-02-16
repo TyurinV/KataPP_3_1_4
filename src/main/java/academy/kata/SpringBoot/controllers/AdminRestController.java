@@ -3,6 +3,7 @@ package academy.kata.SpringBoot.controllers;
 
 import academy.kata.SpringBoot.exeptions.NoSuchUserExeption;
 import academy.kata.SpringBoot.exeptions.UserIncorrectData;
+import academy.kata.SpringBoot.model.Role;
 import academy.kata.SpringBoot.model.User;
 import academy.kata.SpringBoot.service.RoleService;
 import academy.kata.SpringBoot.service.UserService;
@@ -72,5 +73,8 @@ public class AdminRestController {
         return "User whith ID = " + id + " was deleted";
     }
 
-
+    @GetMapping("/users/roles")
+    public List<Role> getAllRoles() {
+        return roleService.getAllRoles();
+    }
 }

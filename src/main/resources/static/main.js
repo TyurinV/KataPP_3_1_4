@@ -8,8 +8,11 @@ const modalForm = new bootstrap.Modal(document.getElementById('editModal'))
 const formEdit = document.getElementById('editForm');
 const modalFormDel = new bootstrap.Modal(document.getElementById('deleteModal'))
 const formDelete = document.getElementById('deleteModal');
-
-
+//достаем список ролей
+let arrRolelist = [];
+fetch('http://localhost:8080/admin/api/users/roles')
+    .then((res) => res.json())
+    .then(json => arrRolelist = json);
 // для создания нового пользователя в JSON
 const firstNameValue = document.getElementById('firstName')
 const passwordValue = document.getElementById('password')
@@ -84,10 +87,7 @@ addUser.addEventListener('submit', (e) => {
             lastName: lastNameValue.value,
             sex: sexValue.value,
             smoker: smokerValue.checked,
-            roles: rolesValue.checked ? [{"id": 1, "roleName": "ROLE_ADMIN"}, {
-                "id": 2,
-                "roleName": "ROLE_USER"
-            }] : [{"id": 2, "roleName": "ROLE_USER"}]
+            roles: rolesValue.checked ? arrRolelist : arrRolelist.filter((role) => role.roleName === "ROLE_USER")
         })
     })
         .then(res => res.json())
@@ -145,6 +145,7 @@ on(document, 'click', '.btne', e => {
 
     }
 )
+
 formEdit.addEventListener('submit', (e) => {
     e.preventDefault()
 
@@ -160,10 +161,9 @@ formEdit.addEventListener('submit', (e) => {
             lastName: lastNameEdit.value,
             sex: sexEdit.value,
             smoker: smokeEdit.checked,
-            roles: adminEdit.checked ? [{"id": 1, "roleName": "ROLE_ADMIN"}, {
-                "id": 2,
-                "roleName": "ROLE_USER"
-            }] : [{"id": 2, "roleName": "ROLE_USER"}]
+            roles: adminEdit.checked ? arrRolelist : arrRolelist.filter((role) => role.roleName === "ROLE_USER")
+            // roles: adminEdit.checked ? [{"id": 1, "roleName": "ROLE_ADMIN"}, {
+            // "id": 2,"roleName": "ROLE_USER"}] : [{"id": 2, "roleName": "ROLE_USER"}]
         })
     })
         .then(res => res.json())

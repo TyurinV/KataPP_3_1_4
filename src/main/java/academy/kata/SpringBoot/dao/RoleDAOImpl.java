@@ -15,11 +15,9 @@ public class RoleDAOImpl implements RoleDAO {
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     @Transactional(readOnly = true)
     public Role getRoleByName(String name) {
-
         return em
                 .createQuery("SELECT r from Role r where r.roleName=:name", Role.class)
                 .setParameter("name", name)
