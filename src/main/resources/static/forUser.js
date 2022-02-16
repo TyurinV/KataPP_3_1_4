@@ -2,7 +2,7 @@
 const userInfo = document.getElementById('currentUser');
 let outputUserInfo = '';
 
-fetch('http://localhost:8080/api/currentUser')
+fetch('http://localhost:8080/user/api/currentUser')
     .then((res) => res.json())
     .then((user) => {
         outputUserInfo += `<tr>
@@ -20,7 +20,7 @@ fetch('http://localhost:8080/api/currentUser')
 const header = document.getElementById('headTOP');
 
 //Текст в шапку
-fetch('http://localhost:8080/api/userAuth/')
+fetch('http://localhost:8080/user/api/userAuth/')
     .then((response) => {
         return response.text();
     })

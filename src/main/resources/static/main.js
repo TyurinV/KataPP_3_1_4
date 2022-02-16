@@ -62,7 +62,7 @@ const renderNewUserTableBody = (users) => {
     usersList.innerHTML = output;
 }
 
-const url = 'http://localhost:8080/api/users';
+const url = 'http://localhost:8080/admin/api/users';
 
 //get all users rows
 fetch(url)
@@ -100,7 +100,7 @@ addUser.addEventListener('submit', (e) => {
 
 
 //Текст о юзере с ролями в шапку
-fetch('http://localhost:8080/api/userAuth/')
+fetch('http://localhost:8080/user/api/userAuth/')
     .then((response) => {
         return response.text();
     })
@@ -210,7 +210,7 @@ formDelete.addEventListener('submit', (e) => {
 
 // Вызываем текущего пользователя
 let outputUserInfo = '';
-fetch('http://localhost:8080/api/currentUser')
+fetch('http://localhost:8080/user/api/currentUser')
     .then((res) => res.json())
     .then((user) => {
         outputUserInfo += `<tr>
