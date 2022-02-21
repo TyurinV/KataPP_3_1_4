@@ -45,7 +45,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void edit(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User target = getUserById(user.getId());
+        if (user.getPassword() == "") {
+            user.setPassword(passwordEncoder.encode(target.getPassword()));
+        }
         em.merge(user);
     }
 
