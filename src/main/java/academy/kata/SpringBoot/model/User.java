@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private boolean smoker;
 
 //    @Fetch(FetchMode.JOIN)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "user_role",
             joinColumns = { @JoinColumn(name = "user_id") },

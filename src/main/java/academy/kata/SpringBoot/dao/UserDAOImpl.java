@@ -16,12 +16,8 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager em;
 
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -32,23 +28,21 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void add(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         em.persist(user);
     }
 
     @Override
     @Transactional
     public void remove(Long id) {
-        em.remove(em.find(User.class, id));
+//        em.remove(em.find(User.class, id));
+        em.createQuery("DELETE FROM User u WHERE u.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
     @Transactional
     public void edit(User user) {
-        User target = getUserById(user.getId());
-        if (user.getPassword() == "") {
-            user.setPassword(passwordEncoder.encode(target.getPassword()));
-        }
         em.merge(user);
     }
 

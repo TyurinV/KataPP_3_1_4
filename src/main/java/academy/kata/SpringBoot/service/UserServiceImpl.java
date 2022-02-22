@@ -4,6 +4,7 @@ import academy.kata.SpringBoot.dao.UserDAO;
 import academy.kata.SpringBoot.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
 
-    @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
+        this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
@@ -27,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
 
     public void add(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.add(user);
     }
 
@@ -38,6 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void edit(User user) {
+        User target = getUserById(user.getId());
+        if (user.getPassword() == "") {
+            user.setPassword(passwordEncoder.encode(target.getPassword()));
+        }
         userDAO.edit(user);
     }
 
